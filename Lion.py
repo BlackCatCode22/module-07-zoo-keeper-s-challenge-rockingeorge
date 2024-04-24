@@ -11,26 +11,30 @@ class Lion(Animal):
     # Create a list of lion names.
     list_of_lion_names = []
 
-    file_path = r'C:\2023spring\2023fall\python\dataFiles\animalNames.txt'
+    file_path = r'animalNames.txt' # I tried localizing this file path and looked up a different code to implement to try and pull the file path and it STILL DIDNT WORK LOL!!!!
     with open(file_path, 'r') as file:
         lines = file.readlines()
 
         # Iterate through the lines in the file
         line_num = 1
         for line in lines:
+             # Lions are on #7
             if line_num == 7:
                 list_of_lion_names.extend(line.strip().split(', '))
                 break
             else:
                 line_num += 1
 
-    def __init__(self, name="a_name", animal_id="an_id", birth_date="2099-01-01", color="a_color", gender="a_gender",
+    def __init__(self, name="a_name", animal_id="an_id", birth_date="2099-01-01", color="a_color", sex="a_sex",
                  weight="a_weight", originating_zoo="a_zoo", date_arrival="2099-01-01"):
         # Increment the static variable numOfLions when a new Lion object is created
         Lion.numOfLions += 1
 
-        # Call the constructor of the parent class (Animal) with 'Hyena' as the species
-        super().__init__("lion", name, animal_id, birth_date, color, gender, weight, originating_zoo, date_arrival)
+        # Generate a unique ID for the Lions
+        self.gen_unique_id()
+
+        # Call the constructor of the parent class (Animal) with 'lion' as the species
+        super().__init__("lion", name, animal_id, birth_date, color, sex, weight, originating_zoo, date_arrival)
 
     def make_sound(self):
         return self.lion_sound
@@ -39,3 +43,7 @@ class Lion(Animal):
     #   the list_of_lion_names[]
     def get_lion_name(self):
         return self.list_of_lion_names.pop(0)
+
+    # generate ID abrev 'Li' + number with padding from 0 hopefully 2 dig. long ideally
+    def gen_unique_id(self):
+        self.animal_id = "Li" + str(Lion.numOfLions).zfill(2)
